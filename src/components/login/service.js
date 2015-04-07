@@ -11,42 +11,52 @@ angular.module('transmartBaseUi')
 
         /* Dummy authentication for testing, uses $timeout to simulate api call
          ----------------------------------------------*/
-        $timeout(function(){
+        /*$timeout(function(){
           var response = { success: username === 'test' && password === 'test' };
           if(!response.success) {
             response.message = 'Username or password is incorrect';
           }
           callback(response);
-        }, 1000);
+        }, 1000);*/
 
 
         /* Use this for real authentication
          ----------------------------------------------*/
-        //$http.post('/api/authenticate', { username: username, password: password })
-        //    .success(function (response) {
-        //        callback(response);
-        //    });
+
+        // Get the access_token using the request token (code)
+        $http({
+          url: 'http://localhost:8080/transmart/oauth/token', 
+          method: 'GET',
+          params: {
+            grant_type: 'authorization_code',
+            client_id: 'api-client',
+            client_secret: 'api-client',
+            code: username,
+            redirect_uri: 'http://localhost:8080/transmart/oauth/verify'
+          }
+        })
+          .success(function (response) {
+            callback(response);
+          })
+          .error(function (data, status) {
+            callback(data);
+          });
 
       };
 
-      service.SetCredentials = function (username, password) {
-        var authdata = Base64.encode(username + ':' + password);
-
+      service.SetCredentials = function (access_token) {
         $rootScope.globals = {
-          currentUser: {
-            username: username,
-            authdata: authdata
-          }
+          access_token: access_token
         };
 
-        $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+        $http.defaults.headers.common['Authorization'] = 'Bearer ' + access_token; // jshint ignore:line
         $cookieStore.put('globals', $rootScope.globals);
       };
 
       service.ClearCredentials = function () {
         $rootScope.globals = {};
         $cookieStore.remove('globals');
-        $http.defaults.headers.common.Authorization = 'Basic ';
+        $http.defaults.headers.common.Authorization = undefined;
       };
 
       return service;

@@ -11,8 +11,8 @@ angular.module('transmartBaseUi')
     $scope.login = function () {
       $scope.dataLoading = true;
       AuthenticationService.Login($scope.username, $scope.password, function(response) {
-        if(response.success) {
-          AuthenticationService.SetCredentials($scope.username, $scope.password);
+        if (response) {
+          AuthenticationService.SetCredentials(response.access_token);
           $location.path('/');
         } else {
           $scope.alerts.push({type: 'danger', msg: 'Invalid login credentials.' });

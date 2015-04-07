@@ -29,7 +29,7 @@ angular.module('transmartBaseUi', [
     // =========================
     // Set restful api base url
     // =========================
-    RestangularProvider.setBaseUrl('http://localhost:8080/transmart-rest-api');
+    RestangularProvider.setBaseUrl('http://localhost:8080/transmart/');
 
   }])
 
@@ -39,13 +39,13 @@ angular.module('transmartBaseUi', [
       // keep user logged in after page refresh
       $rootScope.globals = $cookieStore.get('globals') || {};
 
-      if ($rootScope.globals.currentUser) {
-        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+      if ($rootScope.globals.access_token) {
+        $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.globals.access_token;
       }
 
       $rootScope.$on('$locationChangeStart', function (event, next, current) {
         // redirect to login page if not logged in
-        if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+        if ($location.path() !== '/login' && !$rootScope.globals.access_token) {
           $location.path('/login');
         }
       });
