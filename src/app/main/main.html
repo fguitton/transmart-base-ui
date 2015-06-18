@@ -139,6 +139,33 @@
             </table>
 
           </tab>
+
+          <tab heading="ShinyR">
+
+
+            <div ng-controller="OpenCpuCtrl">
+
+              <div class="row">
+                <div class="col-md-4">
+                  <input ng-model="value" ng-mouseup="makeChart(value,valuea,valueb)" type=range id=randd min=10 value=10 max=100 step=5> {{value}}
+                  <input ng-model="valuea" ng-mouseup="makeChart(value,valuea,valueb)" type=range id=randd min=10 value=10 max=100 step=5> {{valuea}}
+                  <input ng-model="valueb" ng-mouseup="makeChart(value,valuea,valueb)" type=range id=randd min=10 value=10 max=100 step=5> {{valueb}}
+                  <br>
+                  <button class="btn btn-default" ng-click="makeChart(value,valuea,valueb)">Plooooot</button>
+                </div>
+                <div class="col-md-8">
+                  <span class="glyphicon glyphicon-spin" ng-class="{'glyphicon-refresh': loading}"></span>
+                  <iframe class='shade' id='plotdiv' seamless scrolling = "no" frameborder = "0"
+                          allowTransparency = "true"></iframe>
+                </div>
+              </div>
+
+
+
+            </div>
+
+          </tab>
+
         </tabset>
       </div>
   </div> <!--end main-->
