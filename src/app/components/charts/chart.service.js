@@ -300,7 +300,7 @@ angular.module('transmartBaseUi')
                         type: typeof obs.value,
                         name: _getLastToken(obs.label),
                         ids: cs.chartId++,
-                    })
+                    });
                 }
             };
 
@@ -326,7 +326,7 @@ angular.module('transmartBaseUi')
                 node.restObj.one('observations').get().then(function (observations){
                     observations = observations._embedded.observations;
                     observations.forEach(function (obs){
-                        if(obs.value != null) {
+                        if(obs.value !== null) {
                             _addLabel(obs);
                             var found = _.findWhere(cs.subjects, {id: obs._embedded.subject.id});
                             if (found){
