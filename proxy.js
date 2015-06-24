@@ -64,6 +64,7 @@ http.createServer(function (req, res) {
     }
     if (req.headers.authorization) {
       headers.Authorization = req.headers.authorization;
+      console.log(headers.Authorization);
     }
 
     // Make the request

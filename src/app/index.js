@@ -41,6 +41,11 @@ angular.module('transmartBaseUi', [
       // Set an interceptor in order to parse the API response
       // when getting a list of resources
       RestangularProvider.setResponseInterceptor(function(data, operation, what) {
+        console.log(data);
+
+        if(typeof data === 'string'){ //OMG.. why
+          data = JSON.parse(data);
+        }
 
         /**
          * Get the last token when requested model is a string path
@@ -60,6 +65,7 @@ angular.module('transmartBaseUi', [
               resp =  data._embedded[what];
             } else {
               _what = _getLastToken(what);
+              console.log(_what);
               resp =  data._embedded[_what];
             }
             return resp;
