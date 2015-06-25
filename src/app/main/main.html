@@ -48,13 +48,17 @@
               <span>Cohort</span>
             </tab-heading>
 
-
             <accordion close-others="false">
               <accordion-group is-open="true">
                 <accordion-heading>
-                  {{selectedStudy.title}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                  {{selectedStudy.title}} Summary Statistics<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                 </accordion-heading>
-                This is just some content to illustrate fancy headings.
+                <div class="summarydiv">
+                  <span ng-repeat="concept in magicConcepts" id="summary-chart-{{concept}}">
+                    <h6>{{titles[$index]}}</h6>
+                  </span>
+                </div>
+
               </accordion-group>
 
 
@@ -67,7 +71,7 @@
                           ng-click="removeLabel(label)">{{label.name}}</button>
                   <button ng-if="cohortChartContainerLabels.length >= 1" class="btn btn-danger" ng-click="resetActiveLabels()">Reset</button>
                 </div>
-                <div>
+                <div id="main-chart-container">
 
                   <progressbar max="100"
                                value="cohortSelected/(cohortTotal/100)"
