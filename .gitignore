@@ -5,3 +5,4 @@ bower_components/
 .tmp/
 dist/
 transmart-base-ui.iml
+/npm-debug.log
